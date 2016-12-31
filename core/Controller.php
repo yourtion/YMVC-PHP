@@ -2,11 +2,14 @@
 namespace core;
 
 use core\View;    //使用视图类
+use core\traits\Jump;
 /**
  * 控制器基类
  */
 class Controller
 {
+  use Jump;
+  
   protected $vars = []; //模板变量
   protected $tpl; //视图模板
 
