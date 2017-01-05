@@ -44,11 +44,14 @@ class View
       $parser = new Parser($tpl_file);
       $parser->compile($parser_file);
     }
-    include $parser_file;    //引入编译文件
     //若开启了自动缓存则缓存模板
     if (Config::get('auto_cache')) {
+      ob_start();
+      include $parser_file;    //引入编译文件
       file_put_contents($cache_file,ob_get_contents());
-      ob_end_clean();
+      ob_end_flush();
+    } else {
+      include $parser_file;    //引入编译文件
     }
   }
 }
