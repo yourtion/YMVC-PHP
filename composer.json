@@ -1,0 +1,25 @@
+{
+  "name": "yourtion/ymvc",
+  "version": "0.0.1",
+  "description": "A simple mvc framework, support multple output.",
+  "keywords": ["MVC"],
+  "homepage": "https://github.com/yourtion/YMVC-PHP",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yourtion Guo",
+      "email": "yourtion@gmail.com",
+      "homepage": "http://blog.yourtion.com",
+      "role": "Developer"
+    }
+  ],
+  "archive": {
+    "exclude": [
+      "/app/*", 
+      "/runtime/cache/*", 
+      "/runtime/compile/*", 
+      "/runtime/log/*", 
+      "/config/config.php"
+    ]
+  }
+}
