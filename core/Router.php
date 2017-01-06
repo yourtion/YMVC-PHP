@@ -69,12 +69,20 @@ class Router
         $this->route_url['action'] = $array['action'];
         unset($array['action']);
       }
+      if (isset($array['format'])) {
+        $this->route_url['format'] = $array['format'];
+        unset($array['format']);
+      }
+      
+      //判断url后缀名
       if (isset($this->route_url['action']) && strpos($this->route_url['action'],'.')) {
-        //判断url方法名后缀 形如 'index.html',前提必须要在地址中以 localhost:8080/index.php 开始
-        if (explode('.',$this->route_url['action'])[1] != Config::get('url_html_suffix')) {
-          exit('suffix errror');
-        } else {
+        if (explode('.',$this->route_url['action'])[1] == Config::get('url_html_suffix')) {
           $this->route_url['action'] = explode('.',$this->route_url['action'])[0];
+        } elseif(explode('.',$this->route_url['action'])[1] == Config::get('url_json_suffix')) {
+          $this->route_url['action'] = explode('.',$this->route_url['action'])[0];
+          $this->route_url['format'] = 'json';
+        } else{
+          exit('Suffix errror');
         }
       }
     } else {
@@ -97,16 +105,22 @@ class Router
         if (isset($arr[4]) && !empty($arr[4])) {
           $this->route_url['action'] = $arr[4];
         }
+        if (isset($arr[5]) && !empty($arr[5])) {
+          $this->route_url['format'] = $arr[5];
+        }
 
         //判断url后缀名
         if (isset($this->route_url['action']) && strpos($this->route_url['action'],'.')) {
-          if (explode('.',$this->route_url['action'])[1] != Config::get('url_html_suffix')) {
-            exit('Incorrect URL suffix');
-          } else {
+          if (explode('.',$this->route_url['action'])[1] == Config::get('url_html_suffix')) {
             $this->route_url['action'] = explode('.',$this->route_url['action'])[0];
+          } elseif(explode('.',$this->route_url['action'])[1] == Config::get('url_json_suffix')) {
+            $this->route_url['format'] = explode('.',$this->route_url['action'])[1];
+            $this->route_url['action'] = explode('.',$this->route_url['action'])[0];
+          } else{
+            exit('Incorrect URL suffix');
           }
         }
-      } else {                        //直接以 'localhost:8080'开始
+      } else { //直接以 'localhost:8080'开始
         if (isset($arr[1]) && !empty($arr[1])) {
           $this->route_url['module'] = $arr[1];
         }
@@ -115,6 +129,9 @@ class Router
         }
         if (isset($arr[3]) && !empty($arr[3])) {
           $this->route_url['action'] = $arr[3];
+        }
+        if (isset($arr[4]) && !empty($arr[4])) {
+          $this->route_url['format'] = $arr[4];
         }
       }
     } else {

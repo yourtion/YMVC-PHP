@@ -56,7 +56,11 @@ class App
     
       //判断访问的方法是否存在
       if (method_exists($controller,$action)) {
-        $controller->setTpl($action); //设置方法对应的视图模板
+        if (isset($url_array['format']) && $url_array['format'] === 'json') {
+          $controller->setJson(true); 
+        } else {
+          $controller->setTpl($action); //设置方法对应的视图模板
+        }
         $controller->$action(); //执行该方法
       } else {
         die('The method does not exist');

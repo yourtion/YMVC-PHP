@@ -24,5 +24,6 @@ return [
 
   'auto_cache'       => true, //开启自动缓存
   'url_html_suffix'  => 'html', // URL伪静态后缀
+  'url_json_suffix'  => 'json', // URL伪静态json后缀
 
 ];
